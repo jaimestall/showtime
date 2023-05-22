@@ -16,6 +16,7 @@ export function middleware(request: NextRequest) {
   return NextResponse.next()
 }
 
+// em quais caminhos/endereços eu quero disparar este middleware (necessidade de login para acessar)
 export const config = {
   matcher: '/memories/:path*',
 }

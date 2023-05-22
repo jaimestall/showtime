@@ -7,6 +7,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
     await request.jwtVerify()
   })
 
+  // consulta de memórias de um usuário (passa-se o token depois de autenticado)
   app.get('/memories', async (request) => {
     const memories = await prisma.memory.findMany({
       where: {
@@ -26,6 +27,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
     })
   })
 
+  // consulta a uma memória específica pelo id na url (requer autenticação)
   app.get('/memories/:id', async (request, reply) => {
     const paramsSchema = z.object({
       id: z.string().uuid(),
@@ -46,6 +48,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
     return memory
   })
 
+  // publicação de uma memória através do body da requisição
   app.post('/memories', async (request) => {
     const bodySchema = z.object({
       content: z.string(),
@@ -67,6 +70,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
     return memory
   })
 
+  // edita uma memória cujo id foi enviado pela url
   app.put('/memories/:id', async (request, reply) => {
     const paramsSchema = z.object({
       id: z.string().uuid(),
@@ -106,6 +110,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
     return memory
   })
 
+  // deleta uma memória cujo id foi passado pela url
   app.delete('/memories/:id', async (request, reply) => {
     const paramsSchema = z.object({
       id: z.string().uuid(),
